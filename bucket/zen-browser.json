@@ -20,13 +20,7 @@
             "hash": "a17792f2d3b1440899cb94b5beb2ae3c65ae01cc7ef390dfefd7e6902653412a"
         }
     },
-    "post_install": [
-        "zen -CreateProfile \"Scoop $persist_dir\\profile\"",
-        "$Addition = \"$persist_dir\\addition\"",
-        "if (Test-Path $Addition) {",
-        "  info 'Copying additional items...'",
-        "  Copy-Item -Path $Addition\\* -Destination $dir -Force -Recurse -ErrorAction SilentlyContinue",
-        "}",
+    "pre_install": [
         "$scriptLines = @(",
         "  '$appDir = Split-Path $PSScriptRoot -Parent',",
         "  '$targetExe = Join-Path $appDir \"current\\core\\zen.exe\"',",
@@ -42,8 +36,16 @@
         "  '}',",
         "  'Write-Host \"Zen Browser registry keys patched to use Scoop current path.\"'",
         ")",
-        "Set-Content -Path \"$dir\\zen-fix-links.ps1\" -Value $scriptLines",
-        "info 'Running registry patch to fix link opening (will apply if Zen is already default)...'",
+        "Set-Content -Path \"$dir\\zen-fix-links.ps1\" -Value $scriptLines"
+    ],
+    "post_install": [
+        "zen -CreateProfile \"Scoop $persist_dir\\profile\"",
+        "$Addition = \"$persist_dir\\addition\"",
+        "if (Test-Path $Addition) {",
+        "  info 'Copying additional items...'",
+        "  Copy-Item -Path $Addition\\* -Destination $dir -Force -Recurse -ErrorAction SilentlyContinue",
+        "}",
+        "info 'Running registry patch (will apply if Zen is already default)...'",
         "& \"$dir\\zen-fix-links.ps1\""
     ],
     "extract_dir": "core",
