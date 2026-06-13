@@ -76,15 +76,16 @@
         ]
     ],
     "persist": [
-        "home",
-        "mingw32",
-        "mingw64",
-        "ucrt64",
-        "clang32",
-        "clang64",
-        "clangarm64",
-        "opt",
-        "src"
+        "home"
+    ],
+    "post_install": [
+        "$envs = @('ucrt64', 'mingw64', 'mingw32', 'clang64', 'clangarm64')",
+        "foreach ($env in $envs) {",
+        "    if (!(Test-Path \"$persist_dir\\$env\")) { New-Item -ItemType Directory -Path \"$persist_dir\\$env\" | Out-Null }",
+        "    if (!(Test-Path \"$dir\\$env\")) { New-Item -ItemType Directory -Path \"$dir\\$env\" | Out-Null }",
+        "    $win_path = \"$persist_dir\\$env\" -replace '\\\\', '/'",
+        "    Add-Content -Path \"$dir\\etc\\fstab\" -Value \"$win_path /$env ntfs binary,noacl,auto 0 0\"",
+        "}"
     ],
     "checkver": {
         "url": "https://github.com/msys2/msys2-installer/releases",
