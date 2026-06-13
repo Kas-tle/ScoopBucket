@@ -23,7 +23,7 @@
     "pre_install": [
         "$scriptLines = @(",
         "  '$appDir = Split-Path $PSScriptRoot -Parent',",
-        "  '$targetExe = Join-Path $appDir \"current\\core\\zen.exe\"',",
+        "  '$targetExe = Join-Path $appDir \"current\\zen.exe\"',",
         "  '$newCmd = ''\"'' + $targetExe + ''\" -osint -url \"%1\"''',",
         "  '$newBaseCmd = ''\"'' + $targetExe + ''\"''',",
         "  '\"Firefox*\", \"Zen*\" | ForEach-Object {',",
