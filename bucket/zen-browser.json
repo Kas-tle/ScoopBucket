@@ -7,6 +7,7 @@
         "To set profile 'Scoop' as *DEFAULT*, or profiles/settings was lost after update:",
         "  - Run 'Zen Browser Profile Manager', choose 'Scoop' then click 'Start Zen Browser'.",
         "  - Visit 'about:profiles' page in Zen Browser to check *DEFAULT* profile.",
+        "  - Run 'zen-fix-links' once Zen is set as the default browser to ensure links open in the Scoop profile",
         "For details: https://support.mozilla.org/en-US/kb/profile-manager-create-remove-switch-firefox-profiles"
     ],
     "architecture": {
@@ -25,7 +26,25 @@
         "if (Test-Path $Addition) {",
         "  info 'Copying additional items...'",
         "  Copy-Item -Path $Addition\\* -Destination $dir -Force -Recurse -ErrorAction SilentlyContinue",
-        "}"
+        "}",
+        "$scriptLines = @(",
+        "  '$appDir = Split-Path $PSScriptRoot -Parent',",
+        "  '$targetExe = Join-Path $appDir \"current\\core\\zen.exe\"',",
+        "  '$newCmd = ''\"'' + $targetExe + ''\" -osint -url \"%1\"''',",
+        "  '$newBaseCmd = ''\"'' + $targetExe + ''\"''',",
+        "  'Get-ChildItem -Path HKCU:\\Software\\Classes\\Zen* -ErrorAction SilentlyContinue | ForEach-Object {',",
+        "  '  $cmdKey = Join-Path $_.PSPath \"shell\\open\\command\"',",
+        "  '  if (Test-Path $cmdKey) { Set-ItemProperty -Path $cmdKey -Name \"(default)\" -Value $newCmd }',",
+        "  '}',",
+        "  'Get-ChildItem -Path HKCU:\\Software\\Clients\\StartMenuInternet\\Zen* -ErrorAction SilentlyContinue | ForEach-Object {',",
+        "  '  $cmdKey = Join-Path $_.PSPath \"shell\\open\\command\"',",
+        "  '  if (Test-Path $cmdKey) { Set-ItemProperty -Path $cmdKey -Name \"(default)\" -Value $newBaseCmd }',",
+        "  '}',",
+        "  'Write-Host \"Zen Browser registry keys patched to use Scoop current path.\"'",
+        ")",
+        "Set-Content -Path \"$dir\\zen-fix-links.ps1\" -Value $scriptLines",
+        "info 'Running registry patch to fix link opening (will apply if Zen is already default)...'",
+        "& \"$dir\\zen-fix-links.ps1\""
     ],
     "extract_dir": "core",
     "bin": [
@@ -33,7 +52,8 @@
             "zen.exe",
             "zen",
             "-P Scoop"
-        ]
+        ],
+        "zen-fix-links.ps1"
     ],
     "shortcuts": [
         [
