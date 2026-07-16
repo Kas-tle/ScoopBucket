@@ -22,7 +22,7 @@
     },
     "pre_install": [
         "$scriptLines = @(",
-        "  '$targetExe = Join-Path $PSScriptRoot \"core\\zen.exe\"',",
+        "  '$targetExe = Join-Path $PSScriptRoot \"zen.exe\"',",
         "  '$newCmd = ''\"'' + $targetExe + ''\" -P Scoop \"%1\"''',",
         "  '$newBaseCmd = ''\"'' + $targetExe + ''\" -P Scoop''',",
         "  '\"Firefox*\", \"Zen*\" | ForEach-Object {',",
