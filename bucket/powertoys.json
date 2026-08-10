@@ -21,7 +21,7 @@
         }
     },
     "pre_install": [
-        "Stop-Process -Name 'PowerToys*' -Force -ErrorAction SilentlyContinue"
+        "Get-Process -Name 'PowerToys*', '*CmdPal*', '*CommandPalette*' -ErrorAction SilentlyContinue | Stop-Process -Force"
     ],
     "installer": {
         "script": [
@@ -63,11 +63,10 @@
         "}"
     ],
     "pre_uninstall": [
-        "Stop-Process -Name 'PowerToys*' -Force -ErrorAction SilentlyContinue"
+        "Get-Process -Name 'PowerToys*', '*CmdPal*', '*CommandPalette*' -ErrorAction SilentlyContinue | Stop-Process -Force"
     ],
     "uninstaller": {
         "script": [
-            "Stop-Process -Name 'PowerToys*' -Force -ErrorAction SilentlyContinue",
             "$regpath = 'HKCU:\\Software\\Classes\\powertoys'",
             "if ($global) {",
             "    $regpath = $regpath.Replace('HKCU', 'HKLM')",
