@@ -47,6 +47,7 @@
     ],
     "post_install": [
         "zen -CreateProfile \"Scoop $persist_dir\\profile\"",
+        "Remove-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name 'Zen Browser', 'Zen', 'Firefox' -ErrorAction SilentlyContinue",
         "$Addition = \"$persist_dir\\addition\"",
         "if (Test-Path $Addition) {",
         "  info 'Copying additional items...'",
@@ -54,7 +55,7 @@
         "}",
         "info 'Running registry patch (will apply if Zen is already default)...'",
         "& \"$dir\\zen-fix-links.ps1\""
-    ],
+    ]
     "extract_dir": "core",
     "bin": [
         [
