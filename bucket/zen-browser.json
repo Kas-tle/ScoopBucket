@@ -55,7 +55,7 @@
         "}",
         "info 'Running registry patch (will apply if Zen is already default)...'",
         "& \"$dir\\zen-fix-links.ps1\""
-    ]
+    ],
     "extract_dir": "core",
     "bin": [
         [
