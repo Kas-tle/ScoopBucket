@@ -1,0 +1,44 @@
+{
+    "version": "1.3.0-rc.3",
+    "description": "Feature rich, native desktop YouTube Music client built with Tauri and Rust",
+    "homepage": "https://github.com/SimoHypers/limusic",
+    "license": "GPL-3.0-or-later",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/SimoHypers/limusic/releases/download/v1.3.0-rc.3/limusic_1.3.0-rc.3_x64-setup.exe#/dl.7z",
+            "hash": "0bf664963790396c9b9a88199aa13e86706819231396786afbc4671d6c64d92b"
+        }
+    },
+    "installer": {
+        "script": [
+            "if (Test-Path \"$dir\\$_OUTDIR\") {",
+            "    Get-ChildItem -Path \"$dir\\$_OUTDIR\\*\" | Move-Item -Destination \"$dir\" -Force",
+            "    Remove-Item -Path \"$dir\\$_OUTDIR\" -Recurse -Force",
+            "}",
+            "Remove-Item -Path \"$dir\\$PLUGINSDIR\", \"$dir\\uninstall*.exe\" -Recurse -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "bin": [
+        [
+            "limusic.exe",
+            "limusic"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "limusic.exe",
+            "LiMusic"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/SimoHypers/limusic",
+        "prerelease": true
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/SimoHypers/limusic/releases/download/v$version/limusic_$version_x64-setup.exe#/dl.7z"
+            }
+        }
+    }
+}
