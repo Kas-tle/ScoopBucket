@@ -18,13 +18,6 @@
         "        Remove-Item $subPath -Recurse -Force",
         "    }",
         "}",
-        "if (!(Test-Path \"$dir\\limusic.exe\")) {",
-        "    $exe = Get-ChildItem -Path $dir -Filter '*.exe' -Recurse -File | Where-Object { $_.Name -notlike 'uninstall*' } | Select-Object -First 1",
-        "    if ($exe -and $exe.DirectoryName -ne $dir) {",
-        "        Get-ChildItem -Path \"$($exe.DirectoryName)\\*\" | Move-Item -Destination $dir -Force",
-        "        Remove-Item -Path $exe.DirectoryName -Recurse -Force",
-        "    }",
-        "}",
         "$plugins = Join-Path $dir '$PLUGINSDIR'",
         "if (Test-Path $plugins) {",
         "    Remove-Item $plugins -Recurse -Force",
@@ -33,13 +26,13 @@
     ],
     "bin": [
         [
-            "limusic.exe",
+            "limusic-app.exe",
             "limusic"
         ]
     ],
     "shortcuts": [
         [
-            "limusic.exe",
+            "limusic-app.exe",
             "LiMusic"
         ]
     ],
