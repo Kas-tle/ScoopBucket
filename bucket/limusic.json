@@ -9,15 +9,18 @@
             "hash": "0bf664963790396c9b9a88199aa13e86706819231396786afbc4671d6c64d92b"
         }
     },
-    "installer": {
-        "script": [
-            "if (Test-Path \"$dir\\$_OUTDIR\") {",
-            "    Get-ChildItem -Path \"$dir\\$_OUTDIR\\*\" | Move-Item -Destination \"$dir\" -Force",
-            "    Remove-Item -Path \"$dir\\$_OUTDIR\" -Recurse -Force",
-            "}",
-            "Remove-Item -Path \"$dir\\$PLUGINSDIR\", \"$dir\\uninstall*.exe\" -Recurse -Force -ErrorAction SilentlyContinue"
-        ]
-    },
+    "pre_install": [
+        "$outdir = Join-Path $dir '$_OUTDIR'",
+        "if (Test-Path $outdir) {",
+        "    Get-ChildItem \"$outdir\\*\" | Move-Item -Destination $dir -Force",
+        "    Remove-Item $outdir -Recurse -Force",
+        "}",
+        "$plugins = Join-Path $dir '$PLUGINSDIR'",
+        "if (Test-Path $plugins) {",
+        "    Remove-Item $plugins -Recurse -Force",
+        "}",
+        "Remove-Item \"$dir\\uninstall*.exe*\" -Force -ErrorAction SilentlyContinue"
+    ],
     "bin": [
         [
             "limusic.exe",
