@@ -37,13 +37,14 @@
         ]
     ],
     "checkver": {
-        "github": "https://github.com/SimoHypers/limusic",
-        "regex": "releases/tag/v?([\\d.]+(?:-[a-zA-Z0-9.]+)?)"
+        "github": "https://api.github.com/repos/SimoHypers/limusic/releases",
+        "jsonpath": "$[0].tag_name",
+        "regex": "^v?([\\w.-]+)$"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/SimoHypers/limusic/releases/download/v$version/limusic_$version_x64-setup.exe#/dl.7z"
+                "url": "https://github.com/SimoHypers/limusic/releases/download/v$version/limusic_${version}_x64-setup.exe"
             }
         }
     }
