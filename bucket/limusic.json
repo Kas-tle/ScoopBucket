@@ -44,7 +44,7 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/SimoHypers/limusic/releases/download/v$version/limusic_${version}_x64-setup.exe"
+                "url": "https://github.com/SimoHypers/limusic/releases/download/v$version/limusic_$version_x64-setup.exe#/dl.7z"
             }
         }
     }
